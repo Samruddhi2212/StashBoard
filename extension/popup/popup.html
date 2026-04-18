@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stashboard</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="app" class="app">
+
+    <!-- ── Header: search + space tabs ─────────────────────────────── -->
+    <header class="header">
+      <div class="search-wrapper">
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+          aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          id="search"
+          type="text"
+          class="search-input"
+          placeholder="Search clips… (/ to focus)"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Search clipboard history"
+        />
+        <button id="settings-btn" class="icon-btn" title="Settings (⚙)" aria-label="Open settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Space tabs -->
+      <nav id="space-tabs" class="space-tabs" role="tablist" aria-label="Spaces">
+        <!-- Populated by popup.js -->
+      </nav>
+    </header>
+
+    <!-- ── Category filter pills ────────────────────────────────────── -->
+    <div id="category-filter" class="category-filter" role="group" aria-label="Filter by category">
+      <!-- Populated by popup.js -->
+    </div>
+
+    <!-- ── Clips list ────────────────────────────────────────────────── -->
+    <main
+      id="clips-container"
+      class="clips-container"
+      role="list"
+      aria-live="polite"
+      aria-label="Clipboard history"
+    >
+      <div id="clips-list" class="clips-list"></div>
+      <div id="load-more-sentinel" class="load-more-sentinel" aria-hidden="true"></div>
+    </main>
+
+    <!-- ── Status bar ────────────────────────────────────────────────── -->
+    <footer id="status-bar" class="status-bar" aria-label="Status">
+      <span id="status-count" class="status-count">0 clips</span>
+      <span id="status-capture" class="status-capture capture-on" aria-live="polite">● Capturing</span>
+      <span class="status-hint" aria-hidden="true">↑↓ nav · Enter paste · / search</span>
+    </footer>
+
+    <!-- ── Settings panel (overlay) ─────────────────────────────────── -->
+    <div
+      id="settings-panel"
+      class="settings-panel hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Settings"
+    >
+      <div class="settings-header">
+        <h2 class="settings-title">Settings</h2>
+        <button id="settings-close" class="icon-btn" aria-label="Close settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="settings-body">
+        <label class="setting-row">
+          <span class="setting-label">Capture clipboard</span>
+          <input type="checkbox" id="setting-capture" checked />
+        </label>
+
+        <div class="setting-row">
+          <span class="setting-label">Theme</span>
+          <select id="setting-theme" aria-label="Theme">
+            <option value="system">System default</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+
+        <div class="setting-row setting-row--column">
+          <span class="setting-label">Excluded domains</span>
+          <textarea
+            id="setting-excluded"
+            placeholder="One domain per line, e.g. bank.com"
+            rows="3"
+            aria-label="Excluded domains"
+          ></textarea>
+        </div>
+
+        <button id="settings-save" class="btn-primary">Save settings</button>
+      </div>
+    </div>
+
+  </div><!-- /#app -->
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+{
+  "manifest_version": 3,
+  "name": "Stashboard",
+  "short_name": "Stashboard",
+  "version": "0.1.0",
+  "description": "Your second brain for everything you copy — smart clipboard manager with keyboard-first UX.",
+  "permissions": [
+    "clipboardRead",
+    "clipboardWrite",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Stashboard",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+V",
+        "mac": "Command+Shift+V"
+      },
+      "description": "Open Stashboard popup"
+    },
+    "quick_paste_1": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+1",
+        "mac": "Command+Shift+1"
+      },
+      "description": "Quick paste item 1"
+    },
+    "quick_paste_2": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+2",
+        "mac": "Command+Shift+2"
+      },
+      "description": "Quick paste item 2"
+    },
+    "quick_paste_3": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+3",
+        "mac": "Command+Shift+3"
+      },
+      "description": "Quick paste item 3"
+    },
+    "quick_paste_4": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+4",
+        "mac": "Command+Shift+4"
+      },
+      "description": "Quick paste item 4"
+    },
+    "quick_paste_5": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+5",
+        "mac": "Command+Shift+5"
+      },
+      "description": "Quick paste item 5"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

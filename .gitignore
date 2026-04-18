@@ -1,0 +1,59 @@
+# ── Node / JS ──────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+.parcel-cache/
+
+# ── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.venv/
+venv/
+env/
+.env
+!.env.example
+*.egg-info/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# ── Chrome extension build artifacts ──────────────────────────────────────
+*.crx
+*.pem
+*.zip
+
+# ── OS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── IDE / editors ──────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Secrets ────────────────────────────────────────────────────────────────
+*.pem
+*.key
+secrets/
+
+# ── Alembic ────────────────────────────────────────────────────────────────
+# Keep env.py, but ignore auto-generated migration files during dev
+# (remove this line when you start generating real migrations)
+# backend/alembic/versions/

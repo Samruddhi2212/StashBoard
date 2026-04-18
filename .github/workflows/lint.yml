@@ -1,0 +1,90 @@
+name: Lint
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ── Python lint (ruff) ────────────────────────────────────────────────────
+  lint-python:
+    name: Lint Python (ruff)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ruff
+        run: pip install ruff==0.4.4
+
+      - name: Run ruff check
+        run: ruff check . --output-format=github
+
+      - name: Run ruff format check
+        run: ruff format --check .
+
+  # ── JavaScript lint (eslint) ──────────────────────────────────────────────
+  lint-js:
+    name: Lint JavaScript (eslint)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: extension
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install eslint
+        run: |
+          npm init -y
+          npm install --save-dev eslint@9 @eslint/js
+
+      - name: Create ESLint config
+        run: |
+          cat > eslint.config.js << 'EOF'
+          import js from "@eslint/js";
+          export default [
+            js.configs.recommended,
+            {
+              languageOptions: {
+                ecmaVersion: 2022,
+                globals: {
+                  chrome:     "readonly",
+                  document:   "readonly",
+                  window:     "readonly",
+                  navigator:  "readonly",
+                  crypto:     "readonly",
+                  setTimeout: "readonly",
+                  clearTimeout: "readonly",
+                  console:    "readonly",
+                  Promise:    "readonly",
+                  Event:      "readonly",
+                  URL:        "readonly",
+                  IntersectionObserver: "readonly",
+                  confirm:    "readonly",
+                },
+              },
+              rules: {
+                "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+                "no-console":     "off",
+              },
+            },
+          ];
+          EOF
+
+      - name: Run eslint
+        run: npx eslint content.js background.js popup/popup.js
