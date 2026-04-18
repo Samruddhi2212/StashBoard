@@ -50,32 +50,30 @@
       },
       "description": "Quick paste item 1"
     },
-    "quick_paste_2": {
+    "paste_prev": {
       "suggested_key": {
-        "default": "Ctrl+Shift+2",
-        "mac": "Command+Shift+2"
+        "default": "Alt+Up",
+        "mac": "Alt+Up"
       },
+      "description": "Paste previous (older) clipboard item"
+    },
+    "paste_next": {
+      "suggested_key": {
+        "default": "Alt+Down",
+        "mac": "Alt+Down"
+      },
+      "description": "Paste next (newer) clipboard item"
+    },
+    "quick_paste_2": {
       "description": "Quick paste item 2"
     },
     "quick_paste_3": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+3",
-        "mac": "Command+Shift+3"
-      },
       "description": "Quick paste item 3"
     },
     "quick_paste_4": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+4",
-        "mac": "Command+Shift+4"
-      },
       "description": "Quick paste item 4"
     },
     "quick_paste_5": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+5",
-        "mac": "Command+Shift+5"
-      },
       "description": "Quick paste item 5"
     }
   },

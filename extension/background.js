@@ -97,6 +97,7 @@ async function saveClip(clip) {
   }
 
   await saveStorage({ clips });
+  resetCursor(); // New copy → reset navigation back to index 0
 }
 
 /**
@@ -370,9 +371,46 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   return true; // Keep port open for async sendResponse
 });
 
+// ── Clipboard cursor (in-memory, resets when service worker restarts) ─────────
+
+/**
+ * Tracks the current position in clipboard history for arrow-key navigation.
+ * 0 = most recent clip. Increments on paste_prev, decrements on paste_next.
+ */
+let clipCursor = 0;
+
+/**
+ * Resets the clipboard cursor to 0 whenever a new clip is saved.
+ * Called from saveClip so navigation always starts from the latest item.
+ */
+function resetCursor() {
+  clipCursor = 0;
+}
+
 // ── Quick-paste keyboard commands ─────────────────────────────────────────────
 
 chrome.commands.onCommand.addListener(async (command) => {
+  // Cycle backward through history (older items)
+  if (command === 'paste_prev') {
+    const { clips, total } = await getClips({ offset: 0, limit: 50 });
+    if (clips.length === 0) return;
+    clipCursor = Math.min(clipCursor + 1, total - 1);
+    const clip = clips[Math.min(clipCursor, clips.length - 1)];
+    await pasteText(clip.text);
+    return;
+  }
+
+  // Cycle forward through history (newer items)
+  if (command === 'paste_next') {
+    const { clips } = await getClips({ offset: 0, limit: 50 });
+    if (clips.length === 0) return;
+    clipCursor = Math.max(clipCursor - 1, 0);
+    const clip = clips[clipCursor];
+    await pasteText(clip.text);
+    return;
+  }
+
+  // Positional quick-paste: quick_paste_1 pastes the most recent clip, etc.
   const match = command.match(/^quick_paste_(\d+)$/);
   if (!match) return;
 
