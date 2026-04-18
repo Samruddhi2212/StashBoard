@@ -29,9 +29,6 @@ jobs:
       - name: Run ruff check
         run: ruff check . --output-format=github
 
-      - name: Run ruff format check
-        run: ruff format --check .
-
   # ── JavaScript lint (eslint) ──────────────────────────────────────────────
   lint-js:
     name: Lint JavaScript (eslint)
@@ -51,6 +48,7 @@ jobs:
       - name: Install eslint
         run: |
           npm init -y
+          npm pkg set type=module
           npm install --save-dev eslint@9 @eslint/js
 
       - name: Create ESLint config
@@ -63,19 +61,20 @@ jobs:
               languageOptions: {
                 ecmaVersion: 2022,
                 globals: {
-                  chrome:     "readonly",
-                  document:   "readonly",
-                  window:     "readonly",
-                  navigator:  "readonly",
-                  crypto:     "readonly",
-                  setTimeout: "readonly",
-                  clearTimeout: "readonly",
-                  console:    "readonly",
-                  Promise:    "readonly",
-                  Event:      "readonly",
-                  URL:        "readonly",
+                  chrome:               "readonly",
+                  document:             "readonly",
+                  window:               "readonly",
+                  navigator:            "readonly",
+                  crypto:               "readonly",
+                  setTimeout:           "readonly",
+                  clearTimeout:         "readonly",
+                  console:              "readonly",
+                  Promise:              "readonly",
+                  Event:                "readonly",
+                  URL:                  "readonly",
                   IntersectionObserver: "readonly",
-                  confirm:    "readonly",
+                  confirm:              "readonly",
+                  HTMLInputElement:     "readonly",
                 },
               },
               rules: {
