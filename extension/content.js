@@ -8,12 +8,12 @@
 
 /** Category detection regex patterns. Order matters — more specific patterns first. */
 const CATEGORY_PATTERNS = {
-  email:      /^[\w.+\-]+@[\w\-]+(?:\.[\w\-]+)+$/,
+  email:      /^[\w.+-]+@[\w-]+(?:\.[\w-]+)+$/,
   color_hex:  /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/,
   ip_address: /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/,
   url:        /^https?:\/\//,
   address:    /^\d+\s+[\w\s]+(st(?:reet)?|nd|rd|th|ave(?:nue)?|blvd|dr(?:ive)?|ln|ct|way|pl(?:ace)?|rd|road)\b/i,
-  phone:      /^\+?[\d\s\-()+]{7,20}$/,
+  phone:      /^\+?[-\d\s()+]{7,20}$/,
 };
 
 /**
@@ -32,7 +32,7 @@ function detectCategory(text) {
   if (CATEGORY_PATTERNS.phone.test(trimmed))      return 'phone';
 
   // JSON: starts with { or [ and parses successfully
-  if (/^\s*[{\[]/.test(trimmed)) {
+  if (/^\s*[{[]/.test(trimmed)) {
     try {
       JSON.parse(trimmed);
       return 'json';
